@@ -1,3 +1,4 @@
+-- Active: 1747476651373@@127.0.0.1@5432@db1
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
     customer_id INT,
@@ -47,3 +48,93 @@ WHERE
     ) = '2022'
 GROUP BY
     order_month;
+
+CREATE DATABASE db1;
+
+CREATE TABLE "user" (
+    id SERIAL PRIMARY KEY,
+    userName VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    age INT check (age > 10),
+    phone VARCHAR(15)
+);
+
+INSERT INTO
+    "user" (userName, email, age, phone)
+VALUES (
+        'Sadiq',
+        'sadiq@gmail.com',
+        21,
+        '01996359111'
+    ),
+    (
+        'Noman',
+        'noman@gmail.com',
+        23,
+        '01996359111'
+    ),
+    (
+        'Josim',
+        'josim@gmail.com',
+        27,
+        '01996359111'
+    );
+
+CREATE Table blog (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    user_id INTEGER REFERENCES "user" (id) on delete cascade
+);
+
+INSERT INTO
+    blog (title, content, user_id)
+VALUES (
+        'My first blog',
+        'This is the conntent of my first blog.',
+        1
+    ),
+    (
+        'My Second blog',
+        'This is the conntent of my Second blog.',
+        2
+    ),
+    (
+        'My Third blog',
+        'This is the conntent of my Third blog.',
+        3
+    )
+
+SELECT * FROM "user";
+
+SELECT * FROM blog;
+
+SELECT * from "user" INNER JOIN blog ON "user".id = blog.user_id;
+
+INSERT INTO
+    "user" (userName, email, age, phone)
+VALUES (
+        'Asik',
+        'asik@gmail.com',
+        21,
+        '01996359111'
+    ),
+    (
+        'Ovhi',
+        'ovhi@gmail.com',
+        21,
+        '01996359111'
+    ),
+    (
+        'Emon',
+        'emon@gmail.com',
+        21,
+        '01996359111'
+    );
+
+SELECT DISTINCT
+    userName
+FROM "user"
+WHERE
+    LEFT(userName, 1) NOT IN ('A', 'E', 'O', 'U', 'I')
+    OR RIGHT(userName, 1) NOT IN ('A', 'E', 'O', 'U', 'I');
